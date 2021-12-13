@@ -25,7 +25,12 @@ if(NOT ${lcName}_POPULATED)
 endif()
 
 find_package(ZLIB)
+#find_package(zbar)
+#find_package(png)
+
 target_link_libraries(${PROJECT_NAME} PRIVATE ZLIB::ZLIB)
+target_link_libraries(${PROJECT_NAME} PRIVATE zbar)
+target_link_libraries(${PROJECT_NAME} PRIVATE png)
 
 FetchContent_Declare(COSE-C GIT_REPOSITORY https://github.com/cose-wg/COSE-C.git GIT_TAG 97d1805e71b7a6770093c5e6790d46611680d563) # the commit hash
 FetchContent_MakeAvailable(COSE-C)
@@ -35,8 +40,7 @@ target_include_directories(${PROJECT_NAME} PUBLIC ${INC_PATH})
 target_compile_options(${PROJECT_NAME}
         PRIVATE
         -Wall #-Wextra
-       	-Wno-unused-function -pipe -pedantic
+        -Wno-unused-function -pipe -pedantic
         -fstack-protector-all -fstack-protector-strong
-        #-fsanitize=address -fsanitize=undefined
         -O3 -ffast-math -funroll-loops -march=native
 )
