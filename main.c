@@ -6,14 +6,14 @@
 
 int main(int argc, char *argv[]) {
 
-    GreenPass *gp = gp_new_from_png("/home/user/Documenti/gp1.png");
+    GreenPass *gp = gp_new_from_png("../adolf-gp.png");
     gp_dump_data_raw(gp, stdout);
 
     assert(gp_decode_b45(gp) == ERR_GP_OK);
-    gp_dump_data_raw(gp, stdout);
+    // gp_dump_data_raw(gp, stdout);
 
     assert(gp_decode_zlib(gp) == ERR_GP_OK);
-    gp_dump_data_raw(gp, stdout);
+    // gp_dump_data_raw(gp, stdout);
 
     // CBOR/COSE data decode
     cose_cbor_unserialize(gp->data, gp->bsize); // TODO: refactor this
