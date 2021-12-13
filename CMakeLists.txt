@@ -3,7 +3,12 @@ project(greenpass_string_reader C)
 set(CMAKE_C_STANDARD 11)
 
 set(INC_PATH  ${PROJECT_SOURCE_DIR}/include)
-add_executable(${PROJECT_NAME} main.c)
+set(SRC_PATH  ${PROJECT_SOURCE_DIR}/src)
+
+add_executable(${PROJECT_NAME}
+        main.c
+        ${SRC_PATH}/my_greenpass.c
+)
 
 
 # BASE45
@@ -44,8 +49,8 @@ target_link_libraries(${PROJECT_NAME} PRIVATE cn-cbor::cn-cbor cose-c::cose-c)
 target_include_directories(${PROJECT_NAME} PUBLIC ${INC_PATH})
 target_compile_options(${PROJECT_NAME}
         PRIVATE
-        -Wall #-Wextra
-        -Wno-unused-function -pipe -pedantic
-        -fstack-protector-all -fstack-protector-strong
-        -O3 -ffast-math -funroll-loops -march=native
+            -Wall #-Wextra
+            -Wno-unused-function -pipe -pedantic
+            -fstack-protector-all -fstack-protector-strong
+            -O3 -ffast-math -funroll-loops -march=native
 )

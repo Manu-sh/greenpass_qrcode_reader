@@ -1,7 +1,9 @@
-#pragma once
+#include <stddef.h>
+
+#include <stdio.h>
+#include <stdlib.h>
 #include <zlib.h>
 #include <assert.h>
-
 
 #if 0
 /*
@@ -121,19 +123,23 @@ static int zlib_decompress(FILE *source, FILE *dest) {
 }
 
 // the buffer returned by this function should be free()
-static unsigned char * zlib_mem_decompress(unsigned char *z_src, size_t z_bsize, size_t *len) {
+unsigned char * zlib_mem_decompress(unsigned char *z_src, size_t z_bsize, size_t *bsize) {
 
     unsigned char *dst = NULL;
 
     // zlib decompress
     FILE * file_in = fmemopen(z_src, z_bsize, "r");
-    FILE * file_out = open_memstream((char **)&dst, len);
+    FILE * file_out = open_memstream((char **)&dst, bsize);
 
     int err = Z_OK;
     if ((err = zlib_decompress(file_in, file_out)) != Z_OK) {
-        z_err(file_in, file_out, err);
+
+        #ifdef DEBUG
+                z_err(file_in, file_out, err);
+        #endif
+
         fclose(file_in), fclose(file_out), free(dst);
-        *len = 0;
+        *bsize = 0;
         return NULL;
     }
 

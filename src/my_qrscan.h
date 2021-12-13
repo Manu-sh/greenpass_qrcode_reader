@@ -3,6 +3,7 @@
 // Taken from https://github.com/ZBar/ZBar/blob/master/examples/scan_image.c
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
 
 #include <png.h>
 #include <zbar.h>
@@ -27,20 +28,20 @@
  * get_data() will use libpng to read an image file. refer to libpng
  * documentation for details
  */
-static void get_data(const char *name, int *width, int *height, void **rraw) {
+static bool get_data(const char *name, int *width, int *height, void **rraw) {
 
     unsigned char **raw = (unsigned char **)rraw;
 
     FILE *file = fopen(name, "rb");
-    if(!file) exit(2);
+    if(!file) return false;
 
     png_structp png = png_create_read_struct(PNG_LIBPNG_VER_STRING,NULL, NULL, NULL);
-    if(!png) exit(3);
+    if(!png) return false;
 
     if(setjmp(png_jmpbuf(png))) exit(4);
     png_infop info = png_create_info_struct(png);
 
-    if(!info) exit(5);
+    if(!info) return false;
     png_init_io(png, file);
     png_read_info(png, info);
 
@@ -65,9 +66,11 @@ static void get_data(const char *name, int *width, int *height, void **rraw) {
     for(int i = 0; i < *height; i++)
         rows[i] = *raw + (*width * i);
     png_read_image(png, rows);
+
+    return true;
 }
 
-static char * qr_scan(const char *fpath) {
+char * qr_scan(const char *fpath) {
 
     /* create a reader */
     zbar_image_scanner_t *scanner = zbar_image_scanner_create();
@@ -79,7 +82,8 @@ static char * qr_scan(const char *fpath) {
     int width = 0, height = 0;
     void *raw = NULL;
 
-    get_data(fpath, &width, &height, &raw);
+    if (!get_data(fpath, &width, &height, &raw))
+        return NULL;
 
     /* wrap image data */
     zbar_image_t *image = zbar_image_create();
@@ -101,6 +105,7 @@ static char * qr_scan(const char *fpath) {
         if (data) {
             // printf("decoded %s symbol \"%s\"\n", zbar_get_symbol_name(typ), data);
             char *ret_val = strdup(data);
+
             /* clean up */
             zbar_image_destroy(image);
             zbar_image_scanner_destroy(scanner);

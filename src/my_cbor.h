@@ -3,11 +3,11 @@
 
 // slightly edited version of https://github.com/jimsch/cn-cbor/blob/f713bf67bcf3e076d47e474ce060252ef8be48c7/test/test.c#L42
 // note: this is not a real pretty print function, you can't assume that is output can be parsed as json
-static inline void dump(const cn_cbor *cb, unsigned indent, bool as_key) {
+static inline void cn_cbor_dump(const cn_cbor *cb, FILE *ostream, unsigned indent, bool as_key) {
 
-#define CPY(s, l) fwrite(s, l, 1, stdout)
-#define OUT(s) printf("%s", s)
-#define PRF(f, a) printf(f, a)
+#define CPY(s, l) fwrite(s, l, 1, ostream)
+#define OUT(s) fprintf(ostream, "%s", s)
+#define PRF(f, a) fprintf(ostream, f, a)
 
     if (!cb) return;
 
@@ -16,9 +16,9 @@ static inline void dump(const cn_cbor *cb, unsigned indent, bool as_key) {
     char finchar = ')'; /* most likely */
 
     for (i = 0; as_key && i < indent; i++)
-        putchar(' ');
+        fputc(' ', ostream);
 
-    if (!as_key) putchar(' ');
+    if (!as_key) fputc(' ', ostream);
 
     switch (cb->type) {
         case CN_CBOR_TEXT_CHUNKED:
@@ -42,27 +42,27 @@ static inline void dump(const cn_cbor *cb, unsigned indent, bool as_key) {
             goto sequence;
         sequence:
             for (cp = cb->first_child; cp; cp = cp->next, as_key = !as_key) {
-                dump(cp, indent+2, as_key);
-                if (!as_key) puts(",");
+                cn_cbor_dump(cp, ostream, indent+2, as_key);
+                if (!as_key) fputs(",\n", ostream);
             }
 
             for (i = 0; as_key && i < indent; i++)
-                putchar(' ');
+                fputc(' ', ostream);
 
             //if (!as_key) putchar('\n');
-            putchar(finchar);
+            fputc(finchar, ostream);
             as_key = false;
             return;
         case CN_CBOR_BYTES:
             OUT("h'");
             for (i = 0; i < cb->length; i++)
                 PRF("%02x", cb->v.str[i] & 0xff);
-            putchar('\'');
+            fputc('\'', ostream);
             break;
         case CN_CBOR_TEXT:
-            putchar('"');
+            fputc('"', ostream);
             CPY(cb->v.str, cb->length); /* should escape stuff */
-            putchar('"');
+            fputc('"', ostream);
             break;
         case CN_CBOR_NULL:
             OUT("null");
@@ -92,6 +92,6 @@ static inline void dump(const cn_cbor *cb, unsigned indent, bool as_key) {
             PRF("???%d???", cb->type);
             break;
     }
-    if (as_key) putchar(':');
+    if (as_key) fputc(':', ostream);
     //if (!as_key) putchar('\n');
 }
