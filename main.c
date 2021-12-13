@@ -10,10 +10,15 @@ int main(int argc, char *argv[]) {
     gp_dump_data_raw(gp, stdout);
 
     assert(gp_decode_b45(gp) == ERR_GP_OK);
+    gp_dump_data_raw(gp, stdout);
+
     assert(gp_decode_zlib(gp) == ERR_GP_OK);
+    gp_dump_data_raw(gp, stdout);
 
     // CBOR/COSE data decode
     cose_cbor_unserialize(gp->data, gp->bsize);
+
+    gp_destroy(&gp);
     return EXIT_SUCCESS;
 }
 
