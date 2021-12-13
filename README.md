@@ -2,12 +2,10 @@
 ###### decode & dump data from greenpass 📄
 The "evolution" of [greenpass_string_reader](https://github.com/Manu-sh/greenpass_string_reader), less academic approach.
 
-<!--
-<a href="https://asciinema.org/a/eRrAulKsa5Yfz7LxL7YuRzzZX?autoplay=1&t=00:02">
-  <img src="https://asciinema.org/a/eRrAulKsa5Yfz7LxL7YuRzzZX.png" width="320px" height="200px" alt="" />
+<a href="https://asciinema.org/a/QcPBd0tkPRfn3J61ssJlFgkpv?autoplay=1&t=00:03">
+  <img src="https://asciinema.org/a/QcPBd0tkPRfn3J61ssJlFgkpv.png" width="320px" height="200px" alt="" />
 </a>
 <br><br>
--->
 
 Dependencies: [base45-ansi-C](https://github.com/ehn-dcc-development/base45-ansi-C.git), [zlib](https://www.zlib.net/), [COSE-C](https://github.com/cose-wg/COSE-C.git), [zbar](https://github.com/ZBar/ZBar), [libpng](https://github.com/glennrp/libpng).
 
