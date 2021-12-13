@@ -12,9 +12,6 @@ Dependencies: [base45-ansi-C](https://github.com/ehn-dcc-development/base45-ansi
 About **base45-ansi-C** it raise many warning because it make an signed integer overflow (which is **UB**)
 ~~i don't care for now, but it's important to know~~ i have opened a [pull request](https://github.com/ehn-dcc-development/base45-ansi-C/pull/2) for this.
 
-I started this to help a guy, then i have wasted hours trying to figure how to COSE-C should be used to this purpose, 
-so i decided to publish here.
-
 ### Build
 
 ```bash
