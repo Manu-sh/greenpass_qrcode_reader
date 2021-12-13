@@ -12,6 +12,11 @@ Dependencies: [base45-ansi-C](https://github.com/ehn-dcc-development/base45-ansi
 About **base45-ansi-C** it raise many warning because it make an signed integer overflow (which is **UB**)
 ~~i don't care for now, but it's important to know~~ i have opened a [pull request](https://github.com/ehn-dcc-development/base45-ansi-C/pull/2) for this.
 
+### Install deps (archlinux)
+```bash
+pacman -S zbar zlib libpng
+```
+
 ### Build
 
 ```bash
