@@ -24,8 +24,13 @@ if(NOT ${lcName}_POPULATED)
     include_directories("${${lcName}_SOURCE_DIR}")
 endif()
 
+## TODO?
+##FetchContent_Declare(ZBar GIT_REPOSITORY https://github.com/ZBar/ZBar.git GIT_TAG 854a5d97059e395807091ac4d80c53f7968abb8f) # the commit hash
+##FetchContent_GetProperties(ZBar)
+
+#
 find_package(ZLIB)
-#find_package(zbar)
+#find_package(ZBar)
 #find_package(png)
 
 target_link_libraries(${PROJECT_NAME} PRIVATE ZLIB::ZLIB)
