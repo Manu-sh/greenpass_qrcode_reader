@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.17)
-project(greenpass_string_reader C)
+project(greenpass_qrcode_reader C)
 set(CMAKE_C_STANDARD 11)
 
 set(INC_PATH  ${PROJECT_SOURCE_DIR}/include)

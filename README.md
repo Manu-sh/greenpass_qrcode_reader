@@ -2,8 +2,8 @@
 ###### decode & dump data from greenpass 📄
 The "evolution" of [greenpass_string_reader](https://github.com/Manu-sh/greenpass_string_reader), less academic approach.
 
-<a href="https://asciinema.org/a/QcPBd0tkPRfn3J61ssJlFgkpv?autoplay=1&t=00:03">
-  <img src="https://asciinema.org/a/QcPBd0tkPRfn3J61ssJlFgkpv.png" width="320px" height="200px" alt="" />
+<a href="https://asciinema.org/a/8aGPXfcenT9ue3RWqJ9py0C5Z?autoplay=1&t=00:01">
+  <img src="https://asciinema.org/a/8aGPXfcenT9ue3RWqJ9py0C5Z.png" width="320px" height="200px" alt="" />
 </a>
 <br><br>
 
