@@ -48,8 +48,7 @@ static inline COSE_Wrap * cose_cbor_unserialize(const unsigned char *buffer, siz
     // il 3° element of the array COSE_Sign1 is the payload: https://datatracker.ietf.org/doc/html/rfc8152#section-4.1
     const cn_cbor *payload = cose_sign_1_decoded->first_child->next->next;
 
-    // TODO: non ci si può chiamare sopra cn_cbor_free() perchè ha dei parent quindi probabilmente non è il modo giusto
-    // di decodificare questo segmento
+    // TODO: genera un leak: non ci si può chiamare sopra cn_cbor_free() perchè ha dei parent quindi probabilmente non è il modo giusto di decodificare questo segmento
     cn_cbor *cbor_payload = cn_cbor_decode((uint8_t *)payload->v.str, payload->length, NULL);
     if (cbor_payload == NULL) {
         // invalid payload

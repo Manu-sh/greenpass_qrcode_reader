@@ -42,6 +42,7 @@ static bool get_data(const char *name, int *width, int *height, void **rraw) {
     }
 
     if(setjmp(png_jmpbuf(png))) {
+        png_destroy_read_struct(&png, NULL, NULL);
         fclose(file);
         return false;
     }
@@ -49,6 +50,7 @@ static bool get_data(const char *name, int *width, int *height, void **rraw) {
     png_infop info = png_create_info_struct(png);
 
     if(!info)  {
+        png_destroy_read_struct(&png, NULL, NULL);
         fclose(file);
         return false;
     }
@@ -81,6 +83,7 @@ static bool get_data(const char *name, int *width, int *height, void **rraw) {
         rows[i] = *raw + (*width * i);
     png_read_image(png, rows);
 
+    png_destroy_read_struct(&png, &info, NULL);
     fclose(file);
     return true;
 }
