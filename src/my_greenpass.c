@@ -54,14 +54,16 @@ void gp_dump_data_raw(const GreenPass *gp, FILE *ostream) {
 
 static int gp_decode_b45(GreenPass *gp) {
 
+    const int prefix_len = strlen("HC1:");
+
     unsigned char zbuf[16384] = {0}; // compressed
     size_t zbsize = sizeof zbuf;
 
-    if (strlen((char *)gp->data) < 5)
+    if (gp->bsize < prefix_len+1)
         return ERR_GP_INVALID_B45;
 
     // b45 decode, skip the "HC1:" from b45 string
-    if (base45_decode(zbuf, &zbsize, (char *)(gp->data + strlen("HC1:")), 0))
+    if (base45_decode(zbuf, &zbsize, (char *)(gp->data + prefix_len), 0))
         return ERR_GP_INVALID_B45;
 
     free(gp->data);
