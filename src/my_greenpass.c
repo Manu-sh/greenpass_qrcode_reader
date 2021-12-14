@@ -13,7 +13,7 @@
 
 
 struct green_pass {
-    cn_cbor *element; // TODO: free me?
+    COSE_Wrap *wrap;
     unsigned char *data;
     size_t bsize;
 };
@@ -98,11 +98,10 @@ static int gp_decode_zlib(GreenPass *gp) {
 
 static int gp_decode_cose(GreenPass *gp) {
 
-    int err = ERR_GP_OK;
-    if ((err = cose_cbor_unserialize(gp->data, gp->bsize, &gp->element)) != ERR_GP_OK)
-        return err;
+    if (!(gp->wrap = cose_cbor_unserialize(gp->data, gp->bsize)))
+        return ERR_GP_MALLOC;
 
-    return ERR_GP_OK;
+    return cose_cbor_has_error(gp->wrap) ? cose_cbor_get_error(gp->wrap) : ERR_GP_OK;
 }
 
 int gp_decode(GreenPass *gp) {
@@ -123,11 +122,12 @@ end:
 }
 
 void gp_dump(const GreenPass *gp, FILE *ostream) {
-    cn_cbor_dump(gp->element, ostream, 0, 0);
+    cn_cbor_dump(cose_cbor_unwrap(gp->wrap), ostream, 0, 0);
     fputc('\n', ostream);
 }
 
 void gp_destroy(GreenPass **gp) {
+    cose_cbor_destroy(&(*gp)->wrap);
     free((*gp)->data);
     free(*gp);
     *gp = NULL;
