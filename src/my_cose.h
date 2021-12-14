@@ -38,18 +38,19 @@ static inline COSE_Wrap * cose_cbor_unserialize(const unsigned char *buffer, siz
         return self;
     }
 
-    if (!cose_sign_1_decoded->first_child || !cose_sign_1_decoded->first_child->next || !cose_sign_1_decoded->first_child->next->next) {
+    // il 3° element of the array COSE_Sign1 is the payload: https://datatracker.ietf.org/doc/html/rfc8152#section-4.1
+    const cn_cbor *payload = cn_cbor_index(cose_sign_1_decoded, 2);
+
+    //if (!cose_sign_1_decoded->first_child || !cose_sign_1_decoded->first_child->next || !cose_sign_1_decoded->first_child->next->next) {
+    if (!payload) {
         //array[2]: payload was expected
         COSE_Sign1_Free(cose_sign_1);
         self->gp_error = ERR_GP_COSE_INVALID_SIGN1_PAYLOAD_MISSED;
         return self;
     }
 
-    // il 3° element of the array COSE_Sign1 is the payload: https://datatracker.ietf.org/doc/html/rfc8152#section-4.1
-    const cn_cbor *payload = cose_sign_1_decoded->first_child->next->next;
-
     // TODO: genera un leak: non ci si può chiamare sopra cn_cbor_free() perchè ha dei parent quindi probabilmente non è il modo giusto di decodificare questo segmento
-    cn_cbor *cbor_payload = cn_cbor_decode((uint8_t *)payload->v.str, payload->length, NULL);
+    cn_cbor *cbor_payload = cn_cbor_decode(payload->v.bytes, payload->length, NULL);
     if (cbor_payload == NULL) {
         // invalid payload
         COSE_Sign1_Free(cose_sign_1);
