@@ -23,9 +23,9 @@ GreenPass * gp_new_from_png(const char *fpath);
 GreenPass * gp_new_from_str(const char *str);
 
 // dump the underlining buffer
-void gp_dump_data_raw(const GreenPass *gp, FILE *ostream);
+void gp_dump_data_raw(const GreenPass *self, FILE *ostream);
 
-int  gp_decode(GreenPass *gp);
-void gp_dump(const GreenPass *gp, FILE *ostream);
+int  gp_decode(GreenPass *self);
+void gp_dump(const GreenPass *self, FILE *ostream);
 
-void gp_destroy(GreenPass **gp);
+void gp_destroy(GreenPass **self);
