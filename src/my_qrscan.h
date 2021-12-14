@@ -36,18 +36,30 @@ static bool get_data(const char *name, int *width, int *height, void **rraw) {
     if(!file) return false;
 
     png_structp png = png_create_read_struct(PNG_LIBPNG_VER_STRING,NULL, NULL, NULL);
-    if(!png) return false;
+    if(!png) {
+        fclose(file);
+        return false;
+    }
 
-    if(setjmp(png_jmpbuf(png))) exit(4);
+    if(setjmp(png_jmpbuf(png))) {
+        fclose(file);
+        return false;
+    }
+
     png_infop info = png_create_info_struct(png);
 
-    if(!info) return false;
+    if(!info)  {
+        fclose(file);
+        return false;
+    }
+
     png_init_io(png, file);
     png_read_info(png, info);
 
     /* configure for 8bpp grayscale input */
     int color = png_get_color_type(png, info);
     int bits = png_get_bit_depth(png, info);
+
     if(color & PNG_COLOR_TYPE_PALETTE)
         png_set_palette_to_rgb(png);
     if(color == PNG_COLOR_TYPE_GRAY && bits < 8)
@@ -58,18 +70,22 @@ static bool get_data(const char *name, int *width, int *height, void **rraw) {
         png_set_strip_alpha(png);
     if(color & PNG_COLOR_MASK_COLOR)
         png_set_rgb_to_gray_fixed(png, 1, -1, -1);
+
     /* allocate image */
     *width = png_get_image_width(png, info);
     *height = png_get_image_height(png, info);
     *raw = malloc(*width * *height);
     png_bytep rows[*height];
+
     for(int i = 0; i < *height; i++)
         rows[i] = *raw + (*width * i);
     png_read_image(png, rows);
 
+    fclose(file);
     return true;
 }
 
+// the result must be free()
 char * qr_scan(const char *fpath) {
 
     /* create a reader */
