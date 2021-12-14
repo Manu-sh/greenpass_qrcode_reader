@@ -4,6 +4,8 @@
 #include <cose/cose.h>
 
 // TODO: free memory etc COSE_Sign1_Free(hSign); https://github.com/cose-wg/COSE-C/blob/97d1805e71b7a6770093c5e6790d46611680d563/test/Sign_test.cpp#L1230
+// cn_cbor_clone() https://github.com/cose-wg/COSE-C/blob/97d1805e71b7a6770093c5e6790d46611680d563/include/cose/cose.h#L808
+
 static int cose_cbor_unserialize(const unsigned char *buffer, size_t bsize, cn_cbor **element) {
 
     *element = NULL;
