@@ -21,6 +21,7 @@ struct green_pass {
 GreenPass * gp_new_from_png(const char *fpath) {
 
     GreenPass *self;
+
     if (!(self = calloc(1, sizeof(GreenPass))))
         return NULL;
 
@@ -55,15 +56,16 @@ void gp_dump_data_raw(const GreenPass *gp, FILE *ostream) {
 static int gp_decode_b45(GreenPass *gp) {
 
     const int prefix_len = strlen("HC1:");
+    const int data_str_len = gp->bsize - 1; // '\0' doesn't count as part of strlen
 
     unsigned char zbuf[16384] = {0}; // compressed
     size_t zbsize = sizeof zbuf;
 
-    if (gp->bsize < prefix_len+1)
+    if (data_str_len <= prefix_len)
         return ERR_GP_INVALID_B45;
 
     // b45 decode, skip the "HC1:" from b45 string
-    if (base45_decode(zbuf, &zbsize, (char *)(gp->data + prefix_len), 0))
+    if (base45_decode(zbuf, &zbsize, (char *)(gp->data + prefix_len), data_str_len - prefix_len))
         return ERR_GP_INVALID_B45;
 
     free(gp->data);
