@@ -48,7 +48,7 @@ static inline COSE_Wrap * cose_cbor_unserialize(const unsigned char *buffer, siz
         self->gp_error = ERR_GP_COSE_INVALID_SIGN1_PAYLOAD_MISSED;
         return self;
     }
-
+    
     // TODO: genera un leak: non ci si può chiamare sopra cn_cbor_free() perchè ha dei parent quindi probabilmente non è il modo giusto di decodificare questo segmento
     cn_cbor *cbor_payload = cn_cbor_decode(payload->v.bytes, payload->length, NULL);
     if (cbor_payload == NULL) {
@@ -83,7 +83,7 @@ static inline void cose_cbor_destroy(COSE_Wrap **self) {
 
     if ((*self)->cose_sign_1) {
         assert( COSE_Sign1_Free((*self)->cose_sign_1) );
-        // cn_cbor_free((*self)->cbor_payload);
+        //cn_cbor_free((*self)->cbor_payload);
     }
 
     (*self)->cose_sign_1  = NULL;
