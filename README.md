@@ -34,4 +34,7 @@ make -j`nproc`
 * https://dday.it/redazione/39870/cosa-ce-scritto-nel-qrcode-del-green-pass-come-decodificarlo-per-guardarci-dentro (Italian)
 * https://github.com/eu-digital-green-certificates/dgc-testdata
 
+### TODO
+* fix leak from exampled copied as is like zbar and so on `valgrind --undef-value-errors=no --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=20 --track-fds=yes ./greenpass_qrcode_reader`
+
 ###### Copyright © 2021, [Manu-sh](https://github.com/Manu-sh), s3gmentationfault@gmail.com. Released under the [MIT license](LICENSE).
