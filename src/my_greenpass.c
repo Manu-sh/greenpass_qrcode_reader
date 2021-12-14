@@ -118,7 +118,7 @@ end:
     return err;
 }
 
-void gp_dump(GreenPass *gp, FILE *ostream) {
+void gp_dump(const GreenPass *gp, FILE *ostream) {
     cn_cbor_dump(gp->element, ostream, 0, 0);
     fputc('\n', ostream);
 }
