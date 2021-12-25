@@ -2,11 +2,12 @@
 ###### decode & dump data from greenpass 📄
 The "evolution" of [greenpass_string_reader](https://github.com/Manu-sh/greenpass_string_reader), less academic approach.
 
+<!--
 <a href="https://asciinema.org/a/8aGPXfcenT9ue3RWqJ9py0C5Z?autoplay=1&t=00:01">
   <img src="https://asciinema.org/a/8aGPXfcenT9ue3RWqJ9py0C5Z.png" width="320px" height="200px" alt="" />
 </a>
 <br><br>
-
+-->
 Dependencies: [base45-ansi-C](https://github.com/ehn-dcc-development/base45-ansi-C.git), [zlib](https://www.zlib.net/), [COSE-C](https://github.com/cose-wg/COSE-C.git), [zbar](https://github.com/ZBar/ZBar), [libpng](https://github.com/glennrp/libpng).
 
 About **base45-ansi-C** it raise many warning because it make an signed integer overflow (which is **UB**)
