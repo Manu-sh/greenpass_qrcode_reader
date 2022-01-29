@@ -38,7 +38,7 @@ static inline COSE_Wrap * cose_cbor_unserialize(const unsigned char *buffer, siz
         return self;
     }
 
-    // il 3° element of the array COSE_Sign1 is the payload: https://datatracker.ietf.org/doc/html/rfc8152#section-4.1
+    // the 3° element of the array COSE_Sign1 is the payload: https://datatracker.ietf.org/doc/html/rfc8152#section-4.1
     const cn_cbor *payload = cn_cbor_index(cose_sign_1_decoded, 2);
 
     //if (!cose_sign_1_decoded->first_child || !cose_sign_1_decoded->first_child->next || !cose_sign_1_decoded->first_child->next->next) {
