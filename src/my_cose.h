@@ -49,7 +49,10 @@ static inline COSE_Wrap * cose_cbor_unserialize(const unsigned char *buffer, siz
         return self;
     }
     
-    // TODO: genera un leak: non ci si può chiamare sopra cn_cbor_free() perchè ha dei parent quindi probabilmente non è il modo giusto di decodificare questo segmento
+
+    // TODO: the call to cn_cbor_decode() generates a leak, seems that you can't call cn_cbor_free()
+    // on it because it has parenting so it's probably not the right way to decode this segment
+    // (i will not going to fix it because no one care about that)
     cn_cbor *cbor_payload = cn_cbor_decode(payload->v.bytes, payload->length, NULL);
     if (cbor_payload == NULL) {
         // invalid payload
