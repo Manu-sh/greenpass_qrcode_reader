@@ -1,6 +1,12 @@
 #pragma once
 
 #include <my_greenpass.h>
+
+#define USE_CBOR_CONTEXT
+#include <cn-cbor/cn-cbor.h>
+extern cn_cbor_context *context;
+#define CBOR_CONTEXT_PARAM , context
+#define CBOR_CONTEXT_PARAM_COMMA context,
 #include <cose/cose.h>
 
 // cn_cbor_clone() https://github.com/cose-wg/COSE-C/blob/97d1805e71b7a6770093c5e6790d46611680d563/include/cose/cose.h#L808
@@ -50,9 +56,6 @@ static inline COSE_Wrap * cose_cbor_unserialize(const unsigned char *buffer, siz
     }
     
 
-    // TODO: the call to cn_cbor_decode() generates a leak, seems that you can't call cn_cbor_free()
-    // on it because it has parenting so it's probably not the right way to decode this segment
-    // (i will not going to fix it because no one care about that)
     cn_cbor *cbor_payload = cn_cbor_decode(payload->v.bytes, payload->length CBOR_CONTEXT_PARAM, NULL);
     if (cbor_payload == NULL) {
         // invalid payload

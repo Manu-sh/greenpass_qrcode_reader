@@ -1,5 +1,11 @@
 #pragma once
 
+#define USE_CBOR_CONTEXT
+#include <cn-cbor/cn-cbor.h>
+extern cn_cbor_context *context;
+#define CBOR_CONTEXT_PARAM , context
+#define CBOR_CONTEXT_PARAM_COMMA context,
+
 // slightly edited version of https://github.com/jimsch/cn-cbor/blob/f713bf67bcf3e076d47e474ce060252ef8be48c7/test/test.c#L42
 // note: this is not a real pretty print function, you can't assume that is output can be parsed as json
 static inline void cn_cbor_dump(const cn_cbor *cb, FILE *ostream, unsigned indent, bool as_key) {
