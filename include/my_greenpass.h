@@ -1,6 +1,5 @@
 #pragma once
 #include <stdio.h>
-#include <cn-cbor/cn-cbor.h>
 
 typedef struct green_pass GreenPass;
 

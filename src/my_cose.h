@@ -22,7 +22,7 @@ static inline COSE_Wrap * cose_cbor_unserialize(const unsigned char *buffer, siz
     int type = 0;
 
     // https://datatracker.ietf.org/doc/html/rfc8152#section-4.2
-    HCOSE_SIGN1 cose_sign_1 = (HCOSE_SIGN1)COSE_Decode(buffer, bsize, &type, COSE_sign1_object, NULL);
+    HCOSE_SIGN1 cose_sign_1 = (HCOSE_SIGN1)COSE_Decode(buffer, bsize, &type, COSE_sign1_object, CBOR_CONTEXT_PARAM_COMMA NULL);
     if (!cose_sign_1 || type != COSE_sign1_object) {
         // not a sign1 object
         COSE_Sign1_Free(cose_sign_1);
@@ -53,7 +53,7 @@ static inline COSE_Wrap * cose_cbor_unserialize(const unsigned char *buffer, siz
     // TODO: the call to cn_cbor_decode() generates a leak, seems that you can't call cn_cbor_free()
     // on it because it has parenting so it's probably not the right way to decode this segment
     // (i will not going to fix it because no one care about that)
-    cn_cbor *cbor_payload = cn_cbor_decode(payload->v.bytes, payload->length, NULL);
+    cn_cbor *cbor_payload = cn_cbor_decode(payload->v.bytes, payload->length CBOR_CONTEXT_PARAM, NULL);
     if (cbor_payload == NULL) {
         // invalid payload
         COSE_Sign1_Free(cose_sign_1);

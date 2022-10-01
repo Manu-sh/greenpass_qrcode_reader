@@ -7,9 +7,9 @@ int main() {
 #if 1
     // example1: decode from a png
     const char *png_s[] = {"../assets/1.png", "../assets/2.png", "../assets/3.png", "../assets/adolf-gp.png"};
-    const int png_len = sizeof png_s / sizeof *png_s;
+    //const int png_len = sizeof png_s / sizeof *png_s;
 
-    for (int i = 0, ec; i < png_len; ++i) {
+    for (int i = 0, ec; i < 1; ++i) {
 
        GreenPass *gp = gp_new_from_png(png_s[i]);
 

@@ -5,11 +5,19 @@
 
 #include "my_zlib.h"
 #include "my_qrscan.h"
-#include "my_cose.h"
-#include "my_cbor.h"
 
 #include <stdlib.h>
 #include <string.h>
+
+
+#define USE_CBOR_CONTEXT
+#include <cn-cbor/cn-cbor.h>
+//cn_cbor_context *context;
+#define CBOR_CONTEXT_PARAM , context
+#define CBOR_CONTEXT_PARAM_COMMA context,
+
+#include "my_cbor.h"
+#include "my_cose.h"
 
 
 struct green_pass {
