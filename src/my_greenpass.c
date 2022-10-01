@@ -11,12 +11,7 @@
 
 #include "my_cbor.h"
 #include "my_cose.h"
-
-#define USE_CBOR_CONTEXT
-#include <cn-cbor/cn-cbor.h>
 cn_cbor_context *context;
-#define CBOR_CONTEXT_PARAM , context
-#define CBOR_CONTEXT_PARAM_COMMA context,
 
 struct green_pass {
     COSE_Wrap *wrap;

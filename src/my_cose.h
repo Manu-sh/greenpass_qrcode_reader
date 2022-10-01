@@ -2,13 +2,7 @@
 
 #include <my_greenpass.h>
 
-#define USE_CBOR_CONTEXT
-#include <cn-cbor/cn-cbor.h>
-extern cn_cbor_context *context;
-#define CBOR_CONTEXT_PARAM , context
-#define CBOR_CONTEXT_PARAM_COMMA context,
-#include <cose/cose.h>
-
+#include "config/cose_cfg.h"
 // cn_cbor_clone() https://github.com/cose-wg/COSE-C/blob/97d1805e71b7a6770093c5e6790d46611680d563/include/cose/cose.h#L808
 
 typedef struct {
