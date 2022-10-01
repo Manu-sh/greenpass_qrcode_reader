@@ -36,6 +36,6 @@ make -j`nproc`
 * https://github.com/eu-digital-green-certificates/dgc-testdata
 
 ### TODO
-* fix leak from exampled copied as is like zbar and so on `valgrind --undef-value-errors=no --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=20 --track-fds=yes ./greenpass_qrcode_reader`
+* memory overlap warning into zbar library (try with another version) `valgrind --undef-value-errors=no --tool=memcheck --leak-check=yes --show-reachable=yes --num-callers=20 --track-fds=yes ./greenpass_qrcode_reader`
 
 ###### Copyright © 2021, [Manu-sh](https://github.com/Manu-sh), s3gmentationfault@gmail.com. Released under the [MIT license](LICENSE).
