@@ -135,7 +135,7 @@ void gp_dump(const GreenPass *self, FILE *ostream) {
 }
 
 void gp_destroy(GreenPass **self) {
-    cose_cbor_destroy(&(*self)->wrap);
+    if ((*self)->wrap) cose_cbor_destroy(&(*self)->wrap);
     free((*self)->data);
     free(*self);
     *self = NULL;
