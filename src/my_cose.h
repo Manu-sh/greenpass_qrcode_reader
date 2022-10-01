@@ -86,6 +86,7 @@ static inline void cose_cbor_destroy(COSE_Wrap **self) {
 
     if ((*self)->cose_sign_1) {
         assert( COSE_Sign1_Free((*self)->cose_sign_1) );
+        //context->free_func((*self)->cbor_payload, context);
         //cn_cbor_free((*self)->cbor_payload);
     }
 
