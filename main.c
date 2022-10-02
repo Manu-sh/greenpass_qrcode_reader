@@ -12,7 +12,6 @@ int main() {
     for (int i = 0, ec; i < png_len; ++i) {
 
        GreenPass *gp = gp_new_from_png(png_s[i]);
-
        if (!gp || (ec = gp_decode(gp)) != ERR_GP_OK) {
            fprintf(stderr, "error on png file png_s[%d] = \"%s\"\n", i, png_s[i]);
            gp_dump_data_raw(gp, stdout);
