@@ -42,7 +42,8 @@ target_link_libraries(${PROJECT_NAME} PRIVATE ZLIB::ZLIB)
 target_link_libraries(${PROJECT_NAME} PRIVATE zbar)
 target_link_libraries(${PROJECT_NAME} PRIVATE png)
 
-FetchContent_Declare(COSE-C GIT_REPOSITORY https://github.com/cose-wg/COSE-C.git GIT_TAG 97d1805e71b7a6770093c5e6790d46611680d563) # the commit hash
+#FetchContent_Declare(COSE-C GIT_REPOSITORY https://github.com/cose-wg/COSE-C.git GIT_TAG 97d1805e71b7a6770093c5e6790d46611680d563) # the commit hash
+FetchContent_Declare(COSE-C GIT_REPOSITORY https://github.com/Manu-sh/COSE-C.git GIT_TAG 13b15f8840aef40cc6b26867be5ff4d019bea4f5) # the commit hash
 FetchContent_MakeAvailable(COSE-C)
 target_link_libraries(${PROJECT_NAME} PRIVATE cn-cbor::cn-cbor cose-c::cose-c)
 
@@ -52,5 +53,5 @@ target_compile_options(${PROJECT_NAME}
             -Wall #-Wextra
             -Wno-unused-function -pipe -pedantic
             -fstack-protector-all -fstack-protector-strong
-            -O3 -ffast-math -funroll-loops -march=native
+            -O3 -ffast-math -funroll-loops -march=native -mtune=native
 )
