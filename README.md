@@ -27,6 +27,15 @@ cmake ..
 make -j`nproc`
 ```
 
+
+Or if you want use [mold linker](https://github.com/rui314/mold?tab=readme-ov-file#mold-a-modern-linker)
+```bash
+mkdir -p build && cd build
+cmake .. -DCMAKE_EXE_LINKER_FLAGS='-fuse-ld=mold' -DCMAKE_SHARED_LINKER_FLAGS='-fuse-ld=mold'
+make -j`nproc`
+```
+
+
 ### Useful links
 
 * https://github.com/jojo2234/GreenPass-Experiments

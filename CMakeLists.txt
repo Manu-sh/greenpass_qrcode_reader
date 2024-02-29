@@ -53,5 +53,7 @@ target_compile_options(${PROJECT_NAME}
             -Wall #-Wextra
             -Wno-unused-function -pipe -pedantic
             -fstack-protector-all -fstack-protector-strong
-            -O3 -ffast-math -funroll-loops -march=native -mtune=native
+            -O3 -ffast-math -funroll-loops -march=native -mtune=native -flto 
+			-funswitch-loops -ftree-vectorize -fivopts -fmodulo-sched
+			-msse -msse2 -msse3 -mmmx -m3dnow -mavx2
 )
